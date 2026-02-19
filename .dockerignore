@@ -1,0 +1,14 @@
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.git
+.env
+outputs/
+.DS_Store
+character/  # Duplicado de characters/
+workflows/  # No necesario en el contenedor
+templates/  # No necesario en el contenedor
+config/  # No necesario en el contenedor
+CLAUDE.md  # No necesario en el contenedor
+*.log  # No incluir logs
