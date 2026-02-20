@@ -50,7 +50,7 @@ RUN curl -sL "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Mont
 # Copiar assets del personaje animado, fondos y musica
 COPY assets/character/ /app/assets/character/
 COPY assets/backgrounds/ /app/assets/backgrounds/
-COPY assets/music/ /app/assets/music/
+# COPY assets/music/ /app/assets/music/
 
 # Puerto que expone el servicio
 EXPOSE 8000
