@@ -48,9 +48,13 @@ RUN curl -sL "https://github.com/JulietaUla/Montserrat/raw/master/fonts/ttf/Mont
          -o /app/assets/fonts/Inter-SemiBold.ttf
 
 # Copiar assets del personaje animado, fondos y musica
-COPY assets/character/ /app/assets/character/
-COPY assets/backgrounds/ /app/assets/backgrounds/
-# COPY assets/music/ /app/assets/music/
+COPY character_angry.png /app/assets/character/
+COPY character_closed.png /app/assets/character/
+COPY character_open.png /app/assets/character/
+COPY body.png /app/assets/character/
+COPY Gemini_Generated_Image_4hsu3s4hsu3s4hsu3s4hsu.png /app/assets/backgrounds/
+COPY Gemini_Generated_Image_sl5zybsl5zybsl5z.png /app/assets/backgrounds/
+COPY ambient_lofi_01.mp3 /app/assets/music/
 
 # Puerto que expone el servicio
 EXPOSE 8000
