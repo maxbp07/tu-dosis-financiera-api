@@ -1,0 +1,28 @@
+# Tu Dosis Financiera / El Mono Financiero — Dependencias Python
+# Scripts: finance_video_gen.py | newsletter_video_gen.py | carousel_gen.py
+# Instalar con: pip install -r requirements.txt
+
+# Video editing
+moviepy==1.0.3
+
+# Azure Text-to-Speech SDK (todos los scripts de voz)
+azure-cognitiveservices-speech>=1.38.0
+
+# Image processing: carruseles (carousel_gen.py) + requerido por moviepy
+Pillow>=10.0.0
+
+# Numeric computing (requerido por moviepy)
+numpy>=1.24.0
+
+# FastAPI y Uvicorn (API REST)
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+python-multipart>=0.0.9
+
+# Pydantic (validación de datos en FastAPI)
+pydantic>=2.0.0
+
+# Nota: ffmpeg debe instalarse en el sistema (NO vía pip)
+# Linux:   sudo apt-get install ffmpeg
+# macOS:   brew install ffmpeg
+# Windows: choco install ffmpeg  o  scoop install ffmpeg

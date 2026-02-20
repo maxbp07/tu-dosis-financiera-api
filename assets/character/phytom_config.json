@@ -1,0 +1,216 @@
+{
+  "character": {
+    "body_image": "body.png",
+    "body_position": [292, 420],
+    "body_scale": 2.0,
+
+    "mouth": {
+      "sprites": {
+        "closed": "character_closed.png",
+        "small": "character_open.png",
+        "medium": "character_open.png",
+        "wide": "character_angry.png"
+      },
+      "region": {
+        "x": 200,
+        "y": 235,
+        "width": 96,
+        "height": 38
+      }
+    },
+
+    "eyes": {
+      "sprites": {
+        "open": "character_open.png",
+        "half": "character_open.png",
+        "closed": "character_closed.png"
+      },
+      "region": {
+        "x": 145,
+        "y": 153,
+        "width": 206,
+        "height": 42
+      }
+    },
+
+    "animation": {
+      "breathing": {
+        "amplitude_px": 5,
+        "cycle_seconds": 3.0,
+        "color_shift": true
+      },
+      "blink": {
+        "interval_min_seconds": 1.5,
+        "interval_max_seconds": 4.0,
+        "blink_duration_seconds": 0.2
+      },
+      "glow": {
+        "enabled": true,
+        "color": [150, 100, 255],
+        "intensity": 0.3,
+        "emotions": {
+          "excited": {
+            "color": [100, 200, 255],
+            "intensity": 0.5
+          },
+          "curious": {
+            "color": [150, 150, 255],
+            "intensity": 0.3
+          },
+          "scared": {
+            "color": [200, 100, 100],
+            "intensity": 0.4
+          }
+        }
+      }
+    }
+  },
+
+  "background": {
+    "image": "space_background.png",
+    "fallback_image": "podcast_studio.png",
+    "fallback_color": [10, 10, 30],
+    "effects": {
+      "stars": {
+        "enabled": true,
+        "count": 100,
+        "twinkle_speed": 0.5
+      },
+      "nebula": {
+        "enabled": true,
+        "opacity": 0.3
+      }
+    }
+  },
+
+  "audio": {
+    "voice": {
+      "default": "es-ES-LauraNeural",
+      "environment_variable": "PHYTOM_VOICE",
+      "rate": 1.20,
+      "style": "cheerful",
+      "pitch": "+0Hz"
+    },
+    "music": {
+      "volume": 0.08,
+      "fade_in": 3.0,
+      "fade_out": 5.0,
+      "preferred_genres": ["space", "cosmic", "ambient", "lofi"],
+      "loop": true
+    }
+  },
+
+  "subtitles": {
+    "font": {
+      "primary": "futura.ttf",
+      "fallback": "orbitron.ttf",
+      "size": 90,
+      "color": [100, 255, 255],
+      "stroke_color": [0, 0, 0],
+      "stroke_width": 2
+    },
+    "style": {
+      "uppercase": true,
+      "word_by_word": true,
+      "spacing": 80,
+      "position_y": HALF_H - 40,
+      "effects": {
+        "glow": false,
+        "shadow": true,
+        "outline": true
+      }
+    }
+  },
+
+  "lip_sync": {
+    "thresholds": {
+      "closed": 0.0,
+      "small": 0.10,
+      "medium": 0.18,
+      "wide": 0.35
+    },
+    "window_ms": 50,
+    "smoothing_frames": 2,
+    "sensitivity_boost": 1.2
+  },
+
+  "layout": {
+    "badge": {
+      "text": "PhytomVerse",
+      "badge": "👽 ALIENígena",
+      "position": ["center", VIDEO_H - 80],
+      "font_size": 32,
+      "badge_font_size": 24,
+      "color": [100, 255, 255]
+    },
+    "character": {
+      "max_height_ratio": 0.85,
+      "horizontal_center": true,
+      "vertical_offset": 30,
+      "padding": 50
+    },
+    "background": {
+      "video_position": [0, HALF_H],
+      "video_crop": true,
+      "video_loop": true
+    }
+  },
+
+  "emotions": {
+    "triggers": {
+      "excited": {
+        "keywords": ["!", "wow", "increíble", "genial", "fantástico", "emocionado", "á", "¡"],
+        "animation": "intense",
+        "color_shift": true,
+        "blink_speed": 1.5
+      },
+      "curious": {
+        "keywords": ["¿", "?", "cómo", "qué", "por qué", "interesante", "curioso", "explorar"],
+        "animation": "gentle",
+        "head_tilt": true,
+        "blink_speed": 2.0
+      },
+      "scared": {
+        "keywords": ["ay", "ayuda", "peligro", "miedo", "asustado", "oh no", "uy"],
+        "animation": "tremble",
+        "color_shift": true,
+        "blink_speed": 3.0
+      }
+    },
+    "default": "normal"
+  },
+
+  "branding": {
+    "logo_position": ["center", VIDEO_H - 80],
+    "logo_size": 120,
+    "text_color": [100, 255, 255],
+    "background_color": [0, 0, 0, 0],
+    "transparency": 0.9
+  },
+
+  "performance": {
+    "fps": 30,
+    "codec": "libx264",
+    "preset": "slow",
+    "crf": 18,
+    "audio_codec": "aac",
+    "audio_bitrate": "192k",
+    "resolution": [1080, 1920],
+    "pixel_format": "yuv420p"
+  },
+
+  "special_effects": {
+    "starfield": {
+      "enabled": true,
+      "star_count": 150,
+      "speed": 0.5,
+      "colors": [[255, 255, 255], [200, 200, 255], [150, 150, 255]]
+    },
+    "photon_burst": {
+      "enabled": true,
+      "trigger_words": ["!", "wow", "genial"],
+      "duration": 0.5,
+      "color": [100, 200, 255]
+    }
+  }
+}
