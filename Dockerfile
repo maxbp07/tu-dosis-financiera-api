@@ -52,7 +52,7 @@ COPY character_angry.png /app/assets/character/
 COPY character_closed.png /app/assets/character/
 COPY character_open.png /app/assets/character/
 COPY body.png /app/assets/character/
-COPY Gemini_Generated_Image_4hsu3s4hsu3s4hsu3s4hsu.png /app/assets/backgrounds/
+COPY Gemini_Generated_Image_4hsu3s4hsu3s4hsu.png /app/assets/backgrounds/
 COPY Gemini_Generated_Image_sl5zybsl5zybsl5z.png /app/assets/backgrounds/
 COPY ambient_lofi_01.mp3 /app/assets/music/
 
