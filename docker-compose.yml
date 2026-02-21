@@ -5,8 +5,6 @@ services:
       - AZURE_SPEECH_KEY=40B0QJmvMmjUQzzVVPbKIZkX2A4t1Gitd4v1QyyJeWnlrOcJr5OAJQQJ99CBAC5T7U2XJ3w3AAAYACOGckmt
       - AZURE_SPEECH_REGION=francecentral
       - API_KEY=Maximussuper-4
-    ports:
-      - "8080:80"
     volumes:
       - video_outputs:/app/outputs
     restart: unless-stopped
