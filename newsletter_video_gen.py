@@ -72,8 +72,10 @@ if not CHARACTERS_DIR.exists():
 # Azure TTS con SSML Cheerful
 # ---------------------------------------------------------------------------
 
-def generate_audio_azure(text: str, output_path: str) -> None:
-    """Genera audio con Azure TTS (AlvaroNeural, cheerful, rate 1.15)."""
+def generate_audio_azure(text: str, output_path: str, voice: str = "es-ES-AlvaroNeural", rate: str = "1.15") -> None:
+    """Genera audio con Azure TTS (AlvaroNeural, cheerful, rate configurable)."""
+    print(f"  [Azure TTS] Generando audio para: {text[:50]}...")
+    print(f"  [Azure TTS] Voz: {voice} | Rate: {rate}")
     try:
         import azure.cognitiveservices.speech as speechsdk
     except ImportError:
@@ -91,9 +93,9 @@ def generate_audio_azure(text: str, output_path: str) -> None:
 
     ssml = f"""<speak version='1.0' xmlns='http://www.w3.org/2001/10/synthesis'
       xmlns:mstts='https://www.w3.org/2001/mstts' xml:lang='es-ES'>
-  <voice name='{DEFAULT_VOICE}'>
+  <voice name='{voice}'>
     <mstts:express-as style='cheerful'>
-      <prosody rate='1.15'>{text}</prosody>
+      <prosody rate='{rate}'>{text}</prosody>
     </mstts:express-as>
   </voice>
 </speak>"""
