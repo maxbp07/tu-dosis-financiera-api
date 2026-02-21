@@ -11,7 +11,7 @@ Endpoints:
 
 Variables de entorno requeridas:
   AZURE_SPEECH_KEY    → Clave Azure Cognitive Services
-  AZURE_SPEECH_REGION → Región (ej: eastus)
+  AZURE_SPEECH_REGION → Región (ej: francecentral)
 """
 
 import os
@@ -28,6 +28,15 @@ from fastapi.responses import FileResponse, JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import APIKeyHeader
 from pydantic import BaseModel
+
+# ==========================================
+# FIX: Crear app ANTES de usarla
+# ==========================================
+app = FastAPI(
+    title="Tu Dosis Financiera — Scripts API",
+    description="API para generación de videos cortos y carruseles",
+    version="1.0.0",
+)
 
 # Añadir scripts/ al path para importar los módulos
 SCRIPTS_DIR = Path(__file__).parent / "scripts"
@@ -74,21 +83,8 @@ async def get_api_key(authorization: str = Security(api_key_header)):
 
     return client_key
 
-# Ajustar FONTS_DIR dentro de los scripts al path correcto del contenedor
-# Los scripts usan Path(__file__).parent.parent / "assets" / "fonts"
-# Con __file__ = /app/scripts/newsletter_video_gen.py → /app/assets/fonts ✓
-
-app = FastAPI(
-    title="Tu Dosis Financiera — Scripts API",
-    description="API para generación de videos cortos y carruseles",
-    version="1.0.0",
-)
-
 
 # ---------------------------------------------------------------------------
-# Modelos de request
-# ---------------------------------------------------------------------------
-
 class VideoRequest(BaseModel):
     guion: str
     titulo: str
@@ -107,11 +103,10 @@ class CarouselRequest(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Health check
+# FIX: /health SIN autenticación para que el healthcheck de Docker funcione
 # ---------------------------------------------------------------------------
-
 @app.get("/health")
-def health(api_key: str = Security(get_api_key)):
+def health():
     """Verifica que el servicio está activo y las vars de entorno configuradas."""
     azure_key = os.environ.get("AZURE_SPEECH_KEY", "")
     azure_region = os.environ.get("AZURE_SPEECH_REGION", "")
@@ -123,9 +118,6 @@ def health(api_key: str = Security(get_api_key)):
 
 
 # ---------------------------------------------------------------------------
-# POST /generate-video  (WF05 — Fábrica de Videos Cortos)
-# ---------------------------------------------------------------------------
-
 @app.post("/generate-video")
 def generate_video(req: VideoRequest, api_key: str = Security(get_api_key)):
     """
@@ -179,7 +171,6 @@ def generate_video(req: VideoRequest, api_key: str = Security(get_api_key)):
         raise HTTPException(status_code=500, detail=f"Error generando video: {e}")
 
     # Devolver el archivo MP4
-    # FileResponse envía el binario; n8n lo recibe como Binary en el HTTP Request node
     return FileResponse(
         path=output_path,
         media_type="video/mp4",
@@ -189,24 +180,11 @@ def generate_video(req: VideoRequest, api_key: str = Security(get_api_key)):
 
 
 # ---------------------------------------------------------------------------
-# POST /generate-carousel  (WF06 — Fábrica de Carruseles)
-# ---------------------------------------------------------------------------
-
 @app.post("/generate-carousel")
 def generate_carousel(req: CarouselRequest, api_key: str = Security(get_api_key)):
     """
     Genera 5 imágenes JPG 1080x1080 (Dark Finance Minimal).
-    Devuelve JSON con las 5 imágenes en base64 para que n8n las procese
-    individualmente y las suba a Google Drive.
-
-    Respuesta:
-    {
-      "fecha": "2026-02-17",
-      "slides": [
-        {"num": 1, "filename": "slide_1_2026-02-17.jpg", "base64": "..."},
-        ...
-      ]
-    }
+    Devuelve JSON con las 5 imágenes en base64 para que n8n las procese.
     """
     import base64
     import carousel_gen as cg
@@ -230,7 +208,7 @@ def generate_carousel(req: CarouselRequest, api_key: str = Security(get_api_key)
         shutil.rmtree(output_dir, ignore_errors=True)
         raise HTTPException(status_code=500, detail=f"Error generando carrusel: {e}")
 
-    # Convertir cada JPG a base64 para que n8n los maneje sin binarios
+    # Convertir cada JPG a base64
     slides = []
     for i, p in enumerate(paths, 1):
         with open(p, "rb") as f:
@@ -241,16 +219,12 @@ def generate_carousel(req: CarouselRequest, api_key: str = Security(get_api_key)
             "base64": img_b64,
         })
 
-    # Limpiar temporales
     shutil.rmtree(output_dir, ignore_errors=True)
 
     return JSONResponse(content={"fecha": fecha, "slides": slides})
 
 
 # ---------------------------------------------------------------------------
-# Limpieza de temporales tras enviar la respuesta
-# ---------------------------------------------------------------------------
-
 def _cleanup_after_response(directory: Path):
     """Devuelve una BackgroundTask de Starlette para borrar el directorio."""
     from starlette.background import BackgroundTask
