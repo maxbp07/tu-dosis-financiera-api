@@ -56,11 +56,7 @@ COPY Gemini_Generated_Image_4hsu3s4hsu3s4hsu.png /app/assets/backgrounds/
 COPY Gemini_Generated_Image_sl5zybsl5zybsl5z.png /app/assets/backgrounds/
 COPY ambient_lofi_01.mp3 /app/assets/music/
 
-# Puerto que expone el servicio
-EXPOSE 8000
+# FIX: Puerto 80 (Easypanel proxy apunta a puerto 80)
+EXPOSE 80
 
-# Variables de entorno requeridas (se configuran en Easypanel)
-# ENV AZURE_SPEECH_KEY=
-# ENV AZURE_SPEECH_REGION=
-
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "80"]
