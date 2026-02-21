@@ -2,9 +2,9 @@ services:
   video-api:
     build: .
     environment:
-      - AZURE_SPEECH_KEY=${AZURE_SPEECH_KEY}
-      - AZURE_SPEECH_REGION=${AZURE_SPEECH_REGION}
-      - API_KEY=${API_KEY}
+      - AZURE_SPEECH_KEY=40B0QJmvMmjUQzzVVPbKIZkX2A4t1Gitd4v1QyyJeWnlrOcJr5OAJQQJ99CBAC5T7U2XJ3w3AAAYACOGckmt
+      - AZURE_SPEECH_REGION=francecentral
+      - API_KEY=Maximussuper-4
     ports:
       - "8000:8000"
     volumes:
